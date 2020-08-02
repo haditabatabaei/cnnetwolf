@@ -139,6 +139,7 @@ udpServer.on('message', (message, rinfo) => {
                 })
         }
     } else {
+        console.log('Discovery Received.')
         let reallyNewNodes = getReallyNewNodes(createNodeArrayFromString(stringifiedMessage, ','));
         console.log('really new nodes', reallyNewNodes);
         if(reallyNewNodes.length > 0) {
