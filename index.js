@@ -151,7 +151,7 @@ udpServer.on('message', (message, rinfo) => {
 
 
 const broadcastKnownNodes = () => {
-    // console.log('Broadcasting current known nodes...')
+    console.log('Broadcasting current known nodes...')
     let bufferedData = [];
     //Create buffered of stringified nodes to broadcast
     for(let i = 0; i < knownNodes.length ; i++) {
@@ -164,9 +164,9 @@ const broadcastKnownNodes = () => {
     //Broadcast created buffer to currently known nodes
     for(let node of knownNodes) {
         udpClient.send(bufferedData, node.port, node.ip, err => {
-            // if(err) { 
-            //     console.log(`Error sending known nodes to ${node.ip}:${node.port} via UDP.`)
-            // }
+            if(err) { 
+                console.log(`Error sending known nodes to ${node.ip}:${node.port} via UDP.`)
+            }
         })
     }
 }
@@ -176,7 +176,7 @@ let udpClientBroadcastInterval = setInterval(broadcastKnownNodes, 7000);
 function createNodeArrayFromString(stringifiedNodes, seperator) {
     //Trim to remove redundant whitespaces
     stringifiedNodes = stringifiedNodes.trim();
-    console.log(stringifiedNodes);
+    // console.log(stringifiedNodes);
     //creat and return result by separator
     return stringifiedNodes.split(seperator).map(item => {
         let splitted = item.split(" ");
