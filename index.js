@@ -33,10 +33,13 @@ let isSearching = false;
 let fileFound = false;
 let fileToSearch = null;
 let foundNode = null;
+let inputCalledBefore = false;
 
 const askInputCommand = () => {
-    inquirer.prompt([{name: 'input', message: '>', type: 'input'}])
+    if(!inputCalledBefore) {
+        inquirer.prompt([{name: 'input', message: '>', type: 'input'}])
     .then(answer => {
+        inputCalledBefore = true;
         let trimmed = answer.input.trim();
         if(trimmed === 'list') {
             console.log(knownNodes);
@@ -65,6 +68,10 @@ const askInputCommand = () => {
     .catch(errors => {
 
     })
+    } else {
+
+    }
+    
 }
 
 function getAvailableFiles() {
