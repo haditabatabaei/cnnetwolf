@@ -57,7 +57,7 @@ try {
                 console.log(`Searching for ${fileToSearch} ...`)
                 //send get file.html to all known nodes
                 for(let node of knownNodes) {
-                    udpClient.send(Buffer.from(trimmed), node.port, node.ip, err => {})
+                    udpClient.send(Buffer.from(`${trimmed} ${CURRENT_IP_ADDRESS} ${udpPort}`), node.port, node.ip, err => {})
                 }
             } else {
                 askInputCommand();
@@ -114,9 +114,11 @@ try {
     udpServer.on('message', (message, rinfo) => {
         let stringifiedMessage = message.toString().trim();
         if(stringifiedMessage.startsWith("get ")) {
-            if(searchInFiles(stringifiedMessage.replace("get ", ""))) {
-                console.log(tcpport, rinfo.port, rinfo.address);
-                udpClient.send(`getres ${tcpPort}`, rinfo.port, rinfo.address, err => {
+            let splittedGetReq = stringifiedMessage.trim().split(" ");
+            if(searchInFiles(splittedGetReq[1])) {
+                // console.log(tcpport, rinfo.port, rinfo.address);
+                console.log(splittedGetReq);
+                udpClient.send(`getres ${tcpPort}`, splittedGetReq[3], splittedGetReq[2], err => {
                     console.log(`Error sending tcp port as query res. ${err.stack}`)
                 })
             }
