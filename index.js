@@ -46,6 +46,7 @@ try {
             } else if(trimmed.startsWith("get ")) {
                 isSearching = true;
                 fileToSearch = trimmed.replace("get ", "");
+                console.log(fileToSearch);
                 setTimeout(() => {
                     isSearching = false;
                     if(!fileFound) {
@@ -57,7 +58,7 @@ try {
                 console.log(`Searching for ${fileToSearch} ...`)
                 //send get file.html to all known nodes
                 for(let node of knownNodes) {
-                    udpClient.send(Buffer.from(`${trimmed} ${CURRENT_IP_ADDRESS} ${udpPort}`), node.port, node.ip, err => {})
+                    udpClient.send(Buffer.from(`get ${fileToSearch} ${CURRENT_IP_ADDRESS} ${udpPort}`), node.port, node.ip, err => {})
                 }
             } else {
                 askInputCommand();
@@ -114,12 +115,11 @@ try {
     udpServer.on('message', message => {
         let stringifiedMessage = message.toString().trim();
         if(stringifiedMessage.startsWith("get ")) {
-            console.log('message get ', stringifiedMessage)
-            let splittedGetReq = stringifiedMessage.split(" ");
-            if(searchInFiles(splittedGetReq[1])) {
+            let splittedGetReq = stringifiedMessage.replace("get ", "").split(" ");
+            if(searchInFiles(splittedGetReq[0])) {
                 // console.log(tcpport, rinfo.port, rinfo.address);
                 console.log(splittedGetReq);
-                udpClient.send(`getres ${tcpPort}`, splittedGetReq[3], splittedGetReq[2], err => {
+                udpClient.send(`getres ${tcpPort}`, splittedGetReq[2], splittedGetReq[1], err => {
                     console.log(`Error sending tcp port as query res. ${err.stack}`)
                 })
             }
