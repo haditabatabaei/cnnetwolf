@@ -158,7 +158,7 @@ const broadcastKnownNodes = () => {
     //Create buffered of stringified nodes to broadcast
     console.log('before loop')
     for(let node of knownNodes) {
-        bufferedData.push(Buffer.from(`${knownNodes[i].name} ${knownNodes[i].ip} ${knownNodes[i].port},`))
+        bufferedData.push(Buffer.from(`${node.name} ${node.ip} ${node.port},`))
     }
     console.log('after loop');
     bufferedData.push(Buffer.from(`${CURRENT_NODE_NAME} ${udpServer.address().ip} ${udpServer.address().port}`))
