@@ -23,9 +23,6 @@ const CURRENT_IP_ADDRESS = ip.address();
 const UDP_GET_WAIT_TIMEOUT = 5000;
 
 
-let knownNodes = getKnownNodesFromFile();
-let availableFiles = getAvailableFiles();
-
 let isSearching = false;
 let fileFound = false;
 let fileToSearch = null;
@@ -33,6 +30,10 @@ let foundNode = null;
 let inputCalledBefore = false;
 
 try {
+
+    let knownNodes = getKnownNodesFromFile();
+    let availableFiles = getAvailableFiles();
+    
     const askInputCommand = () => {
         if(true) {
             inquirer.prompt([{name: 'input', message: '>', type: 'input'}])
