@@ -143,7 +143,7 @@ udpServer.on('message', (message, rinfo) => {
         let reallyNewNodes = getReallyNewNodes(createNodeArrayFromString(stringifiedMessage, ','));
         console.log('really new nodes', reallyNewNodes);
         if(reallyNewNodes.length > 0) {
-            knownNodes = concat(reallyNewNodes);
+            knownNodes = knownNodes.concat(reallyNewNodes);
             writeKnownNodesToFile();
         }
         askInputCommand();
