@@ -126,9 +126,11 @@ try {
         } else if(stringifiedMessage.startsWith("getres ")) {
             //connect using tcp client to tcp port and download file.
             let tcpPort = Number(stringifiedMessage.replace("getres ", ""));
+            console.log(stringifiedMessage);
             if(isSearching == true) {
                     foundNode = knownNodes.find(node => node.ip === rinfo.address().address && node.port == rinfo.address().port);
                     foundNode.tcpPort = Number(message.replace("getres ", ""))
+                    console.log(foundNode);
                     fileFound = true;
                     isSearching = false;
                     console.log(`Node found. receiving file now via ${foundNode}`);
