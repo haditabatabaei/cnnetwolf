@@ -36,7 +36,7 @@ let foundNode = null;
 let inputCalledBefore = false;
 
 const askInputCommand = () => {
-    if(!inputCalledBefore) {
+    if(true) {
         inquirer.prompt([{name: 'input', message: '>', type: 'input'}])
     .then(answer => {
         inputCalledBefore = true;
@@ -153,7 +153,6 @@ udpServer.on('message', (message, rinfo) => {
             knownNodes = knownNodes.concat(reallyNewNodes);
             writeKnownNodesToFile();
         }
-        askInputCommand();
     }
 })
 
@@ -179,7 +178,6 @@ const broadcastKnownNodes = () => {
             }
         })
     }
-    askInputCommand();
 }
 
 let udpClientBroadcastInterval = setInterval(broadcastKnownNodes, 7000);
