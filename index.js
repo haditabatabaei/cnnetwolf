@@ -13,11 +13,18 @@ let tcpPort = null;
 let udpPort = null;
 let tcpClient = net.Socket();
 
-const PATH = "/home/hadi/Desktop/cnproject";
-const KNOWN_NODES_FILE = `${PATH}/knownNodes.txt`;
-const FILES_DIR = `${PATH}/files`;
-const CURRENT_NODE_NAME = "hadiCurrent";
+console.log(process.argv)
+const KNOWN_NODES_FILE = process.argv[2];
+const FILES_DIR = process.argv[3];
+
+if(!!process.argv[4]) {
+    const CURRENT_NODE_NAME = process.argv[4];
+} else {
+    const CURRENT_NODE_NAME = 'unnamed';
+}
+
 const UDP_GET_WAIT_TIMEOUT = 5000;
+
 
 let knownNodes = getKnownNodesFromFile();
 let availableFiles = getAvailableFiles();
