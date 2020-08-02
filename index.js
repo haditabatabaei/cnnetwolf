@@ -146,9 +146,9 @@ udpServer.on('message', (message, rinfo) => {
                 })
         }
     } else {
-        console.log('Discovery Received.')
+        // console.log('Discovery Received.')
         let reallyNewNodes = getReallyNewNodes(createNodeArrayFromString(stringifiedMessage, ','));
-        console.log('really new nodes', reallyNewNodes);
+        // console.log('really new nodes', reallyNewNodes);
         if(reallyNewNodes.length > 0) {
             knownNodes = knownNodes.concat(reallyNewNodes);
             writeKnownNodesToFile();
@@ -159,23 +159,19 @@ udpServer.on('message', (message, rinfo) => {
 
 
 const broadcastKnownNodes = () => {
-    console.log('Broadcasting current known nodes...')
     let bufferedData = [];
     //Create buffered of stringified nodes to broadcast
-    console.log('before loop')
     for(let node of knownNodes) {
         bufferedData.push(Buffer.from(`${node.name} ${node.ip} ${node.port},`))
     }
-    console.log('after loop');
-    bufferedData.push(Buffer.from(`${CURRENT_NODE_NAME} ${udpServer.address().ip} ${udpServer.address().port}`))
-    console.log('after me');
+    bufferedData.push(Buffer.from(`${CURRENT_NODE_NAME} ${udpServer.address().address} ${udpServer.address().port}`))
     //Broadcast created buffer to currently known nodes
     // console.log(bufferedData.toString());
     for(let node of knownNodes) {
         udpClient.send(bufferedData, node.port, node.ip, err => {
-            if(err) { 
-                console.log(`Error sending known nodes to ${node.ip}:${node.port} via UDP.`)
-            }
+            // if(err) { 
+            //     console.log(`Error sending known nodes to ${node.ip}:${node.port} via UDP.`)
+            // }
         })
     }
 }
