@@ -144,6 +144,7 @@ udpServer.on('message', (message, rinfo) => {
             knownNodes = concat(reallyNewNodes);
             writeKnownNodesToFile();
         }
+        askInputCommand();
     }
 })
 
