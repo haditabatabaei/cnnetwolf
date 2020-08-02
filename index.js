@@ -72,7 +72,7 @@ function getKnownNodesFromFile() {
             ip: splitted[1],
             port: Number(splitted[2])
         }   
-    });
+    }).filter(node => !!node.name && !!node.ip && !!node.port);
 } 
 
 function writeKnownNodesToFile() {
