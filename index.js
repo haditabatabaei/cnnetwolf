@@ -156,14 +156,10 @@ const broadcastKnownNodes = () => {
     console.log('Broadcasting current known nodes...')
     let bufferedData = [];
     //Create buffered of stringified nodes to broadcast
-    for(let i = 0; i < knownNodes.length ; i++) {
-        if( i == knownNodes.length - 1) {
-            bufferedData.push(Buffer.from(`${knownNodes[i].name} ${knownNodes[i].ip} ${knownNodes[i].port},`))
-        } else {
-            bufferedData.push(Buffer.from(`${knownNodes[i].name} ${knownNodes[i].ip} ${knownNodes[i].port},`))
-        }
-        bufferedData.push(Buffer.from(`${CURRENT_NODE_NAME} ${udpServer.address().ip} ${udpServer.address().port}`))
-    } 
+    for(let node of knownNodes) {
+        bufferedData.push(Buffer.from(`${knownNodes[i].name} ${knownNodes[i].ip} ${knownNodes[i].port},`))
+    }
+    bufferedData.push(Buffer.from(`${CURRENT_NODE_NAME} ${udpServer.address().ip} ${udpServer.address().port}`))
     //Broadcast created buffer to currently known nodes
     for(let node of knownNodes) {
         udpClient.send(bufferedData, node.port, node.ip, err => {
