@@ -111,10 +111,11 @@ try {
         console.log(`Listening on ${udpServer.address().address}:${udpServer.address().port} via UDP...`)
     })
     
-    udpServer.on('message', (message, rinfo) => {
+    udpServer.on('message', message => {
         let stringifiedMessage = message.toString().trim();
         if(stringifiedMessage.startsWith("get ")) {
-            let splittedGetReq = stringifiedMessage.trim().split(" ");
+            console.log('message get ', stringifiedMessage)
+            let splittedGetReq = stringifiedMessage.split(" ");
             if(searchInFiles(splittedGetReq[1])) {
                 // console.log(tcpport, rinfo.port, rinfo.address);
                 console.log(splittedGetReq);
