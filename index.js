@@ -110,6 +110,7 @@ udpServer.on('message', (message, rinfo) => {
     let stringifiedMessage = message.toString().trim();
     if(stringifiedMessage.startsWith("get ")) {
         if(searchInFiles(stringifiedMessage.replace("get ", ""))) {
+            console.log(tcpport, rinfo.port, rinfo.address())
             udpClient.send(`getres ${tcpPort}`, rinfo.port, rinfo.address, err => {
                 console.log(`Error sending tcp port as query res. ${err.stack}`)
             })
