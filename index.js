@@ -77,8 +77,8 @@ try {
     }
     
     console.log(getAvailableFiles());
-    console.log(fs.readFileSync(`${FILES_DIR}/ta`).toString().trim());
-    console.log(fs.existsSync(`${FILES_DIR}/ta`))
+    // console.log(fs.readFileSync(`${FILES_DIR}/ta`).toString().trim());
+    // console.log(fs.existsSync(`${FILES_DIR}/ta`))
     
     function getKnownNodesFromFile() {
         return fs.readFileSync(KNOWN_NODES_FILE, 'utf-8').split("\n").map(node => {
