@@ -1,0 +1,20 @@
+{
+  "name": "cnproject",
+  "version": "1.0.0",
+  "description": "Computer networks project - Netwolf",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "cn",
+    "nw"
+  ],
+  "author": "Hadi Tabatabaei",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^7.3.3",
+    "nodemon": "^2.0.4",
+    "prompt-sync": "^4.2.0"
+  }
+}
