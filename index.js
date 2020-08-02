@@ -5,6 +5,7 @@ const buffer = require('buffer');
 const path = require('path');
 const prompt = require('prompt-sync')({sigint: true});
 const inquirer = require('inquirer');
+const ip = require('ip');
 
 const udpServer = dgram.createSocket('udp4');
 const udpClient = dgram.createSocket('udp4');
@@ -16,12 +17,8 @@ let tcpClient = net.Socket();
 console.log(process.argv)
 const KNOWN_NODES_FILE = process.argv[2];
 const FILES_DIR = process.argv[3];
-let CURRENT_NODE_NAME;
-if(!!process.argv[4]) {
-    CURRENT_NODE_NAME = process.argv[4];
-} else {
-    CURRENT_NODE_NAME = 'unnamed';
-}
+const CURRENT_NODE_NAME = process.argv[4];
+const CURRENT_IP_ADDRESS = ip.address();
 
 const UDP_GET_WAIT_TIMEOUT = 5000;
 
@@ -105,6 +102,7 @@ udpServer.on('error', err => {
 
 udpServer.on('listening', () => {
     udpPort = udpServer.address().port;
+    console.log(udpServer.address());
     console.log(`Listening on ${udpServer.address().address}:${udpServer.address().port} via UDP...`)
 })
 
@@ -164,7 +162,7 @@ const broadcastKnownNodes = () => {
     for(let node of knownNodes) {
         bufferedData.push(Buffer.from(`${node.name} ${node.ip} ${node.port},`))
     }
-    bufferedData.push(Buffer.from(`${CURRENT_NODE_NAME} ${udpServer.address().address} ${udpServer.address().port}`))
+    bufferedData.push(Buffer.from(`${CURRENT_NODE_NAME} ${CURRENT_IP_ADDRESS} ${udpServer.address().port}`))
     //Broadcast created buffer to currently known nodes
     // console.log(bufferedData.toString());
     for(let node of knownNodes) {
