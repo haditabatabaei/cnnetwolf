@@ -161,6 +161,7 @@ const broadcastKnownNodes = () => {
     }
     bufferedData.push(Buffer.from(`${CURRENT_NODE_NAME} ${udpServer.address().ip} ${udpServer.address().port}`))
     //Broadcast created buffer to currently known nodes
+    console.log(bufferedData.toString());
     for(let node of knownNodes) {
         udpClient.send(bufferedData, node.port, node.ip, err => {
             if(err) { 
@@ -168,6 +169,7 @@ const broadcastKnownNodes = () => {
             }
         })
     }
+    askInputCommand();
 }
 
 let udpClientBroadcastInterval = setInterval(broadcastKnownNodes, 7000);
