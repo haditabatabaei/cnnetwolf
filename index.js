@@ -16,11 +16,11 @@ let tcpClient = net.Socket();
 console.log(process.argv)
 const KNOWN_NODES_FILE = process.argv[2];
 const FILES_DIR = process.argv[3];
-
+let CURRENT_NODE_NAME;
 if(!!process.argv[4]) {
-    const CURRENT_NODE_NAME = process.argv[4];
+    CURRENT_NODE_NAME = process.argv[4];
 } else {
-    const CURRENT_NODE_NAME = 'unnamed';
+    CURRENT_NODE_NAME = 'unnamed';
 }
 
 const UDP_GET_WAIT_TIMEOUT = 5000;
@@ -162,6 +162,7 @@ const broadcastKnownNodes = () => {
     }
     console.log('after loop');
     bufferedData.push(Buffer.from(`${CURRENT_NODE_NAME} ${udpServer.address().ip} ${udpServer.address().port}`))
+    console.log('after me');
     //Broadcast created buffer to currently known nodes
     // console.log(bufferedData.toString());
     for(let node of knownNodes) {
